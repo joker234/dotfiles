@@ -1,0 +1,70 @@
+[user]
+        email = your.name@something.something # change here
+        name = Your Name # change here
+        signkey = 
+[core]
+        editor = vim
+        pager = "less -F -X"
+        attributesfile = /home/something/.gitattributes # change here
+
+[color]
+        diff = auto
+        status = auto
+        branch = auto
+        ui = true
+
+[pager]
+        status = true
+
+[alias]
+        a = add
+        b = branch
+        c = commit
+        cdiff = diff --word-diff-regex=.
+        co = checkout
+        d = diff
+        l = "!. ~/.githelpers && pretty_git_log"
+        la = !git l --all
+        lo = !git l --graph --oneline
+        loa = !git lo --all
+        mt = mergetool
+        p = pull
+        r = !git l -30
+        ra = !git r --all
+        s = show
+        size = !git-commit-size.sh
+        sizelog = "!. ~/.githelpers && gitlog_size"
+        sm = submodule
+        st = status
+        url = "!. ~/.githelpers && github_url"
+        vdiff = "difftool -y -x vimdiff"
+        wdiff = diff --word-diff
+
+[merge]
+        tool = meld
+
+[mergetool "merge"]
+        cmd = vimdiff $LOCAL $MERGED $REMOTE
+
+[diff "sqlite3"]
+        textconv = sh -c 'sqlite3 $@ .dump' -
+[diff "odf"]
+        textconv = odt2txt
+[diff "pandoc"]
+        textconv = pandoc --to=markdown
+[diff "json"]
+        textconv = cat $1 | json_pp
+[difftool "diffpdf"]
+        cmd = diffpdf --view \"$LOCAL\" \"$REMOTE\"
+
+[commit]
+        gpgsign = true
+
+[tag]
+        gpgsign = true
+
+[pull]
+        rebase = merges
+
+[init]
+        defaultBranch = main

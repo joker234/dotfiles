@@ -1,0 +1,11 @@
+*.db        diff=sqlite3
+*.sqlite    diff=sqlite3
+*.sqlite3   diff=sqlite3
+*.odf       diff=odf
+*.odt       diff=odf
+*.odp       diff=odf
+*.ods       diff=odf
+*.doc       diff=pandoc
+*.docx      diff=pandoc
+*.pdf       diff=pdf
+*.json      diff=json

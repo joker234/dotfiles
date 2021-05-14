@@ -1,0 +1,40 @@
+#!/usr/bin/env zsh
+ 
+HASH="%C(bold yellow)%h%C(RESET)"
+RELATIVE_TIME="%C(bold green)%ar%C(RESET)"
+AUTHOR="%C(bold blue)%an%C(RESET)"
+REFS="%C(bold red)%d%C(RESET)"
+SUBJECT="%s"
+ 
+FORMAT="	$HASH	$RELATIVE_TIME	$AUTHOR	$REFS $SUBJECT"
+ 
+pretty_git_log () {
+    git log --graph --pretty="tformat:$FORMAT" $* |
+    sed -re 's/ ago//' |
+    sed -re 's/^([^\t]*)\t([^\t,]*), [[:digit:]]+ months?/\1\t\2/' |
+    column -t -s "	" |
+    less -FXRS
+}
+
+github_url () {
+	echo $SHELL
+	for rem in $(git remote); do
+		rem_url=$(git remote show $rem | grep URL | sed 's/^.*URL: \(.*\)$/\1/')
+		for remote_url in $rem_url; do
+			if echo "$remote_url" | grep github.com >/dev/null 2>&1; then
+				if [[ $remote_url =~ https://github.com* ]]; then
+					echo $rem $remote_url;
+				elif [[ $remote_url =~ git@github.com* ]]; then
+					echo $rem $(echo $remote_url | sed 's/git\@github.com:\([^/]*\)\/\(.*\)/https:\/\/github.com\/\1\/\2/');
+				fi
+			fi
+		done
+	done \
+	| uniq
+}
+
+gitlog_size () {
+    for i in $(git log --pretty='%h' $*); do
+        git-commit-size.sh $i && git show --no-patch --oneline $i
+    done | sed 'N;s/\n/\t/'
+}
