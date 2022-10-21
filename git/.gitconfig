@@ -68,3 +68,7 @@
 
 [init]
         defaultBranch = main
+[credential]
+	helper = cache
+[push]
+	autoSetupRemote = true
